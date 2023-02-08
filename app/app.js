@@ -14,7 +14,13 @@ app.use(express.json());
 app.use(cors());
 
 
+app.use((req,res,next)=>{
 
+    console.log("1st logger");
+
+    next();
+
+})
 
 
 app.get('/all-employees',async (request,response)=>{
@@ -54,13 +60,22 @@ app.post('/new-employee',async (request,response)=>{
 })
 
 
-app.delete('/all-employees/delete/id=:id',async (request,response)=>{
+app.delete('/all-employees/delete/id=:id',async (request,response,next)=>{
 
 
     let id = request.params.id
 
-    await deleteEmp(id)
-    response.json("employee deleted")
+
+    try {
+        await deleteEmp(id)
+        response.json("employee deleted")
+        
+
+    } catch (error) {
+        next(error)
+    }
+
+    
 
 
 })
@@ -84,6 +99,31 @@ app.put('/edit-employee/emp-id=:id',async (request,response)=>{
 
 })
 
+
+
+// catch error
+app.use((req,res,next)=>{
+
+
+    const error = new Error ("Invalid ID")
+
+    error.status=404;
+
+    next(error)
+})
+
+// define error
+app.use((error,req,res,next)=>{
+
+    res.status(error.status||500);
+    res.json({
+        error:{
+            message:error.message
+        }
+    })
+
+
+})
 
 
 

@@ -1,3 +1,6 @@
+import { throws } from "assert";
+import { errorMonitor } from "events";
+
 import fs from "fs";
 
 import path from "path";
@@ -60,9 +63,23 @@ export async function deleteEmp(id){
 
 let data = await getEmployees();
 
-data.employees = data.employees.filter(e => e.id != id)
+let zeEmp = data.employees.filter(e=>e.id==id);
 
-await save(data)
+if(zeEmp.length==0){
+
+    // invalid id is a message . and responds to error.message
+    throw new Error("Employee ID invalid")
+
+}else {
+
+    data.employees = data.employees.filter(e => e.id != id)
+
+    await save(data)
+
+}
+
+
+
 
 }
 
