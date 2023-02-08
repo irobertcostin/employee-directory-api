@@ -39,18 +39,6 @@ for(let i=0;i<data.length;i++){
 
 }
 
-export async function deleteEmp(id){
-
-let data = await getEmployees();
-
-let test = data.employees.filter(e=>e.id==id)
-
-data.employees = data.employees.filter(e => e.id != id)
-
-await save(data)
-
-}
-
 
 export function save(data){
 
@@ -66,4 +54,49 @@ export function save(data){
             }
         })
     })
+}
+
+export async function deleteEmp(id){
+
+let data = await getEmployees();
+
+data.employees = data.employees.filter(e => e.id != id)
+
+await save(data)
+
+}
+
+
+export async function addEmployee(employee){
+
+    let data = await getEmployees();
+
+    // map every element from arr
+    let ids=[];
+    
+    for(let i=0; i<data.employees.length;i++) {
+
+        ids.push(data.employees[i].id)
+
+
+    }
+
+
+    // define a random number generator
+    let id = Math.floor(Math.random()*500+1)
+
+
+    // while the new id is included in ids(already existing), generate new id
+    while(ids.includes(id)===true){
+
+        id = Math.floor(Math.random()*500+1)
+
+    }
+
+    // once generated and no longer included, assign it to employee
+    employee.id=id;
+
+    data.employees.push(employee)
+    await save(data);
+
 }

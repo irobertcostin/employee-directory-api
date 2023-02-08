@@ -1,4 +1,4 @@
-import{getEmployees,getEmpByName,deleteEmp,save} from "./repository.js"
+import{getEmployees,getEmpByName,deleteEmp,save, addEmployee} from "./repository.js"
 
 
 import express, {json, request, response} from "express";
@@ -35,6 +35,23 @@ app.get('/emp-by-name/name=:name',async(request,response)=>{
 
 })
 
+
+app.post('/new-employee',async (request,response)=>{
+
+    let employee = {
+        full_name: request.body.full_name,
+        email: request.body.email,
+        birth_date: request.body.birth_date,
+        employee_years: request.body.employee_years            
+    }
+
+
+    await addEmployee(employee);
+
+    response.json(JSON.stringify(employee))
+
+
+})
 
 
 app.delete('/all-employees/delete/id=:id',async (request,response)=>{
