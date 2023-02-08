@@ -1,4 +1,4 @@
-import{getEmployees,getEmpByName,deleteEmp,save, addEmployee} from "./repository.js"
+import{getEmployees,getEmpByName,deleteEmp,save, addEmployee, editEmployee} from "./repository.js"
 
 
 import express, {json, request, response} from "express";
@@ -61,6 +61,25 @@ app.delete('/all-employees/delete/id=:id',async (request,response)=>{
 
     await deleteEmp(id)
     response.json("employee deleted")
+
+
+})
+
+app.put('/edit-employee/emp-id=:id',async (request,response)=>{
+
+    let id = request.params.id;
+
+    let employee = {
+
+        full_name:request.body.full_name,
+        email:request.body.email, 
+        birth_date:request.body.birth_date,
+        employee_years:request.body.employee_years
+    }
+
+
+    await editEmployee(employee,id);
+    return response.json("edited successfully")
 
 
 })
