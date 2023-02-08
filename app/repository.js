@@ -43,10 +43,22 @@ export async function deleteEmp(id){
 
 let data = getEmployees();
 
-data.employees=data.employees.filter(e=>e.id!=id)
+id = Math.floor(Math.random()*1000+1)
 
+let ids = data.employees.map(e=>e.id)
 
+console.log(data.employees)
+console.log(ids)
 
+while (ids.includes(id) === true) {
+    id = Math.floor(Math.random() * 1000 + 1);
+}
+
+data.employees=data.employees.filter(e => e.id != id)
+
+// console.log(data.employees[0]);
+
+await save(data)
 
 }
 

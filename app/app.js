@@ -1,8 +1,8 @@
-import express, {json} from "express";
+import express, {json, request, response} from "express";
 
 import cors from "cors";
 
-import{getEmployees,getEmpByName} from "./repository.js"
+import{getEmployees,getEmpByName,deleteEmp} from "./repository.js"
 
 const app=express();
 
@@ -27,6 +27,22 @@ app.get('/emp-by-name/name=:name',async(request,response)=>{
     response.json(emp)
 
 })
+
+
+
+app.delete('/all-employees/delete/id=:id',async (request,response)=>{
+
+
+    let id = request.params.id
+
+    await deleteEmp(id)
+    response.json("employee deleted")
+
+
+})
+
+
+
 
 app.listen(3300,()=>{
 
