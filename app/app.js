@@ -80,21 +80,25 @@ app.delete('/all-employees/delete/id=:id',async (request,response,next)=>{
 
 })
 
-app.put('/edit-employee/emp-id=:id',async (request,response)=>{
+app.put('/edit-employee/emp-id=:id',async (request,response,next)=>{
 
     let id = request.params.id;
 
-    let employee = {
+    try {
+        let employee = {
 
-        full_name:request.body.full_name,
-        email:request.body.email, 
-        birth_date:request.body.birth_date,
-        employee_years:request.body.employee_years
+            full_name:request.body.full_name,
+            email:request.body.email, 
+            birth_date:request.body.birth_date,
+            employee_years:request.body.employee_years
+        }
+    
+    
+        await editEmployee(employee,id);
+        return response.json("edited successfully")
+    } catch (error) {
+        next(error)
     }
-
-
-    await editEmployee(employee,id);
-    return response.json("edited successfully")
 
 
 })
