@@ -100,3 +100,36 @@ export async function addEmployee(employee){
     await save(data);
 
 }
+
+export async function editEmployee(employee,id){
+
+    let data = await getEmployees();
+
+    data.employees.forEach(element => {
+
+        if(element.id==id){
+
+            if(element.full_name){
+                element.full_name=employee.full_name
+            }
+
+            if(element.email){
+                element.email=employee.email;
+            }
+
+            if(element.birth_date){
+                element.birth_date=employee.birth_date;
+            }
+
+            if(element.employee_years){
+                element.employee_years=employee.employee_years;
+            }
+        }
+        
+    });
+
+
+    await save(data);
+
+
+}
