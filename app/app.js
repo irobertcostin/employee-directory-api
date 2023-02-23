@@ -33,16 +33,23 @@ app.get('/all-employees',async (request,response)=>{
 })
 
 
-app.get('/emp-by-name/name=:name',async(request,response)=>{
+app.get('/emp-by-name/name=:name',async(request,response,next)=>{
+
+    try {
 
     let name =request.params.name;
     let emp = await getEmpByName(name);
     response.json(emp)
+    } catch (error) {
+        next(error)
+    }
+
+
 
 })
 
 
-app.post('/new-employee',async (request,response)=>{
+app.post('/add',async (request,response)=>{
 
     let employee = {
         full_name: request.body.full_name,

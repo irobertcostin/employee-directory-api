@@ -30,15 +30,29 @@ export async function getEmpByName(name){
 let data= await getEmployees();
 data = data.employees;
 
-for(let i=0;i<data.length;i++){
+let byName = data.filter(e=>e.full_name==name)
+console.log(byName.length)
 
-    if(data[i].full_name===(name)){
-        // console.log(data[i].full_name)
-        // console.log(name)
-        return data[i];
+
+if(byName.length==0){
+
+
+    throw new Error("No employee by this name")
+} else {
+
+    for(let i=0;i<data.length;i++){
+
+        if(data[i].full_name===(name)){
+            // console.log(data[i].full_name)
+            // console.log(name)
+            return data[i];
+        }
+    
     }
 
 }
+
+
 
 }
 
@@ -82,7 +96,6 @@ if(zeEmp.length==0){
 
 
 }
-
 
 export async function addEmployee(employee){
 
