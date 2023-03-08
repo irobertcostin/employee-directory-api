@@ -62,7 +62,7 @@ app.get('/emp-by-name/name=:name', asyncHandler(async (request, response) => {
 }))
 
 
-app.post('/add', async (request, response) => {
+app.post('/add',asyncHandler( async (request, response) => {
 
     let employee = {
         full_name: request.body.full_name,
@@ -80,34 +80,22 @@ app.post('/add', async (request, response) => {
     response.json(employee)
 
 
-})
+}))
 
 
-app.delete('/all-employees/delete/id=:id', async (request, response, next) => {
+app.delete('/all-employees/delete/id=:id', asyncHandler(async (request, response) => {
 
 
     let id = request.params.id
+    await deleteEmp(id)
+    response.status(200).json("Successfully deleted")
 
 
-    try {
-        await deleteEmp(id)
-        response.json("employee deleted")
+}))
 
-
-    } catch (error) {
-        next(error)
-    }
-
-
-
-
-})
-
-app.put('/edit-employee/emp-id=:id', async (request, response, next) => {
+app.put('/edit-employee/emp-id=:id',asyncHandler( async (request, response, next) => {
 
     let id = request.params.id;
-
-    try {
         let employee = {
 
             full_name: request.body.full_name,
@@ -121,14 +109,13 @@ app.put('/edit-employee/emp-id=:id', async (request, response, next) => {
 
 
         await editEmployee(employee, id);
-        return response.json("edited successfully")
-    } catch (error) {
-        next(error)
-    }
+        // must include a get by id function here, to retrive data after changes 
+        return response.status(200).json(employee);
+
 
 
 })
-
+)
 
 
 // catch error
