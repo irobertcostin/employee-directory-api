@@ -25,6 +25,23 @@ export function getEmployees() {
 }
 
 
+export async function getEmpById(id){
+
+    let data = await getEmployees();
+    data = data.employees;
+
+    let byId = data.filter(e=>e.id==id);
+    
+    if(byId.length==0){
+
+        throw new Error (`No employee with ID ${id} has been found`)
+    } else {
+        return byId[0];
+    }
+
+}
+
+
 export async function getEmpByName(name){
 
 let data= await getEmployees();

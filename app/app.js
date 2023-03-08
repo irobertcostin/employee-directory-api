@@ -1,4 +1,4 @@
-import { getEmployees, getEmpByName, deleteEmp, save, addEmployee, editEmployee } from "./repository.js"
+import { getEmployees, getEmpByName, deleteEmp, save, addEmployee, editEmployee,getEmpById } from "./repository.js"
 
 
 import express, { json, request, response } from "express";
@@ -58,6 +58,15 @@ app.get('/emp-by-name/name=:name', asyncHandler(async (request, response) => {
         let emp = await getEmpByName(name);
         response.status(200).json(emp)
 
+
+}))
+
+
+app.get(`/emp-by-id/id=:id`,asyncHandler(async(request,response)=>{
+
+    let id = request.params.id;
+    let emp = await getEmpById(id);
+    response.status(200).json(emp)
 
 }))
 
