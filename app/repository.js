@@ -31,7 +31,7 @@ let data= await getEmployees();
 data = data.employees;
 
 let byName = data.filter(e=>e.full_name==name)
-console.log(byName.length)
+// console.log(byName.length)
 
 
 if(byName.length==0){
