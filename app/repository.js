@@ -30,15 +30,29 @@ export async function getEmpByName(name){
 let data= await getEmployees();
 data = data.employees;
 
-for(let i=0;i<data.length;i++){
+let byName = data.filter(e=>e.full_name==name)
+// console.log(byName.length)
 
-    if(data[i].full_name===(name)){
-        // console.log(data[i].full_name)
-        // console.log(name)
-        return data[i];
+
+if(byName.length==0){
+
+
+    throw new Error("No employee by this name")
+} else {
+
+    for(let i=0;i<data.length;i++){
+
+        if(data[i].full_name===(name)){
+            // console.log(data[i].full_name)
+            // console.log(name)
+            return data[i];
+        }
+    
     }
 
 }
+
+
 
 }
 
@@ -68,7 +82,7 @@ let zeEmp = data.employees.filter(e=>e.id==id);
 if(zeEmp.length==0){
 
     // invalid id is a message . and responds to error.message
-    throw new Error("Employee ID invalid")
+    throw new Error(`${id} is no valid employee ID`)
 
 }else {
 
@@ -82,7 +96,6 @@ if(zeEmp.length==0){
 
 
 }
-
 
 export async function addEmployee(employee){
 
@@ -122,31 +135,43 @@ export async function editEmployee(employee,id){
 
     let data = await getEmployees();
 
-    data.employees.forEach(element => {
+    let zeEmp = data.employees.filter(e=>e.id==id)
 
-        if(element.id==id){
+    if(zeEmp.length==0){
 
-            if(element.full_name){
-                element.full_name=employee.full_name
+        throw new Error (`${id} is no valid employee ID`)
+
+
+    }else {
+
+        data.employees.forEach(element => {
+
+            if(element.id==id){
+    
+                if(element.full_name){
+                    element.full_name=employee.full_name
+                }
+    
+                if(element.email){
+                    element.email=employee.email;
+                }
+    
+                if(element.birth_date){
+                    element.birth_date=employee.birth_date;
+                }
+    
+                if(element.employee_years){
+                    element.employee_years=employee.employee_years;
+                }
             }
+            
+        });
+    
+    
+        await save(data);
 
-            if(element.email){
-                element.email=employee.email;
-            }
+    }
 
-            if(element.birth_date){
-                element.birth_date=employee.birth_date;
-            }
-
-            if(element.employee_years){
-                element.employee_years=employee.employee_years;
-            }
-        }
-        
-    });
-
-
-    await save(data);
 
 
 }
