@@ -114,6 +114,8 @@ if(zeEmp.length==0){
 
 }
 
+
+//  must be modified to not accept employee with same attributes
 export async function addEmployee(employee){
 
     let data = await getEmployees();
@@ -180,6 +182,8 @@ export async function editEmployee(employee,id){
                 if(element.employee_years){
                     element.employee_years=employee.employee_years;
                 }
+
+                
             }
             
         });
