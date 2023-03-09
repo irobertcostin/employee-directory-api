@@ -25,6 +25,23 @@ export function getEmployees() {
 }
 
 
+export async function getEmpById(id){
+
+    let data = await getEmployees();
+    data = data.employees;
+
+    let byId = data.filter(e=>e.id==id);
+    
+    if(byId.length==0){
+
+        throw new Error (`No employee with ID ${id} has been found`)
+    } else {
+        return byId[0];
+    }
+
+}
+
+
 export async function getEmpByName(name){
 
 let data= await getEmployees();
@@ -97,6 +114,8 @@ if(zeEmp.length==0){
 
 }
 
+
+//  must be modified to not accept employee with same attributes
 export async function addEmployee(employee){
 
     let data = await getEmployees();
@@ -163,6 +182,8 @@ export async function editEmployee(employee,id){
                 if(element.employee_years){
                     element.employee_years=employee.employee_years;
                 }
+
+                
             }
             
         });
