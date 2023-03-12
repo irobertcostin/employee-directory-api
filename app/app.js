@@ -72,22 +72,23 @@ app.get(`/emp-by-id/id=:id`,asyncHandler(async(request,response)=>{
 
 
 app.post('/add',asyncHandler( async (request, response) => {
-
-    let employee = {
-        full_name: request.body.full_name,
-        email: request.body.email,
-        birth_date: request.body.birth_date,
-        employee_years: request.body.employee_years,
-        service: request.body.service,
-        other_projects: request.body.other_projects,
-        position: request.body.position
-    }
+        
 
 
-    await addEmployee(employee);
+    console.log(request.body)
+        let employee = {
+            full_name: request.body.full_name,
+            email: request.body.email,
+            birth_date: request.body.birth_date,
+            employee_years: request.body.employee_years,
+            service: request.body.service,
+            other_projects: request.body.other_projects,
+            position: request.body.position
+        }
+        // console.log(employee)
+        await addEmployee(employee);
 
-    response.json(employee)
-
+        response.json(employee)
 
 }))
 
